@@ -4,7 +4,7 @@ export default {
     socialDistancing: 20,
     maxVel: 1,
     infectious: {
-        range: 20,
+        range: 30,
         count: 1,
         probab: 0.05,
         duration: 5,

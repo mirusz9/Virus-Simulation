@@ -3,6 +3,7 @@ import Susceptible from "./susceptible.js";
 import s from "../../settings.js";
 
 export default class Infectious {
+	static color = "#f56754";
 	color = "#f56754";
 	p: Cell;
 	infectedTime: number;
