@@ -43,28 +43,16 @@ let Cell = /** @class */ (() => {
                     this.mBehav = new SocialDistance(this);
                     break;
             }
+            // The draw circle function
             this.circle = circle;
             this.randomPos();
         }
+        // Random position on the map
         randomPos() {
             this.x = Math.random() * 486 + 7;
             this.y = Math.random() * 486 + 7;
         }
-        getClosest() {
-            let closestDist = Infinity;
-            let closestI = 0;
-            Cell.cells.forEach((cell, index) => {
-                if (cell !== this) {
-                    const dist = Math.abs(this.x - cell.x) ** 2 + Math.abs(this.y - cell.y) ** 2;
-                    if (dist < closestDist) {
-                        closestDist = dist;
-                        closestI = index;
-                    }
-                }
-            });
-            const returned = [Cell.cells[closestI], closestDist];
-            return returned;
-        }
+        // Position getters and setters
         get left() {
             return this.x - this.r;
         }
@@ -89,8 +77,10 @@ let Cell = /** @class */ (() => {
         set bottom(y) {
             this.y = y - this.r;
         }
+        // Updating the position of the cell
         updatePos() {
             this.mBehav.update();
+            // Limiting acceleration
             if (Math.abs(this.aX) > s.maxVel) {
                 this.aX = s.maxVel * Math.sign(this.aX);
             }

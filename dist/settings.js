@@ -1,12 +1,12 @@
 export default {
     fps: 30,
-    popSize: 200,
-    socialDistancing: 20,
+    popSize: 500,
+    socialDistancing: 0,
     maxVel: 1,
     infectious: {
         range: 30,
         count: 1,
-        probab: 0.05,
-        duration: 5,
+        probab: 0.5,
+        duration: 2,
     },
 };

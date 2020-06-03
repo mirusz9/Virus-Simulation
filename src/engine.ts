@@ -1,3 +1,5 @@
+// Pothonprogramming's fixed timestep engine
+
 export default class Engine {
 	private accumulatedTime = 0;
 	private AFR: number; // Animation frame request

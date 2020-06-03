@@ -11,7 +11,7 @@ const c = canvas.getContext("2d")!;
 canvas.width = 1000;
 canvas.height = 500;
 
-// * Basic functions
+// * Basic functions for drawing on the canvas
 const fill = (color: string) => {
 	c.fillStyle = color;
 };
@@ -37,6 +37,12 @@ const circle = (x: number, y: number, r: number, color = "#fff") => {
 	fill(color);
 	c.closePath();
 	c.fill();
+};
+
+const text = (text: string, x: number, y: number, size: number, font = "Arial", color = "#fff") => {
+	fill(color);
+	c.font = `${size}px ${font}`;
+	c.fillText(text, x, y);
 };
 
 // * Setting up the simulation
@@ -65,18 +71,32 @@ for (let i = 0; i < s.popSize; i++) {
 // Update the graph every fourth of a second
 const updateGraphP = s.fps / 4;
 let graphData: [number, number, number][] = [];
+let r: number;
 let currentTime = 0;
-const popRatio = Math.round(500 / s.popSize);
+const popRatio = 450 / s.popSize;
+
 // This is called every frame
 const update = () => {
 	rect(0, 0, 500, 500, "#000");
-	strokeRect(0, 0, 500, 500, 2);
-	// Updating every cell
+	rect(507, 457, 493, 42, "#000");
+	strokeRect(507, 457, 493, 42, 2);
+	// Updating every cell and calculating r
+	let infectiousCount = 0;
+	r = 0;
 	Cell.cells.forEach((cell) => {
 		cell.update(currentTime);
+		if (cell.state instanceof Infectious) {
+			infectiousCount++;
+			r += cell.state.cellsInfected;
+		}
 	});
+	r = Math.round((r / infectiousCount) * 100) / 100 || 0;
+	// Draw border
+	strokeRect(0, 0, 500, 500, 2);
 
-	// Updating graph
+	// * Updating graph
+
+	// Update graph data
 	if (currentTime % updateGraphP == 0) {
 		let sus = 0;
 		let inf = 0;
@@ -93,23 +113,28 @@ const update = () => {
 		graphData.push([sus, inf, rem]);
 	}
 
-	rect(500, 0, 500, 500, Removed.color);
-	graphData.forEach((data, i) => {
-		const x = Math.floor((500 / graphData.length) * i) + 500;
-		const w = Math.ceil(500 / graphData.length);
-		rect(x, data[2] * popRatio, w, data[0] * popRatio, Susceptible.color);
-		rect(x, 500-data[1]*popRatio, w, data[1] * popRatio, Infectious.color)
-	});
+	// Stop the simulation if there are no infected cells
+	if (graphData[graphData.length - 1][1] === 0) {
+		const remPercent = Math.round((graphData[graphData.length - 1][2] / s.popSize) * 100);
+		text(`Removed: ${remPercent}%`, 592, 487, 25);
+		text("Simulation ended", 800, 487, 25);
+		engine.stop();
+	}
 
+	// Draw graph
+	rect(507, 0, 493, 450, Removed.color);
+	graphData.forEach((data, i) => {
+		const x = Math.floor((493 / graphData.length) * i) + 507;
+		const w = Math.ceil(493 / graphData.length);
+		rect(x, Math.floor(data[2] * popRatio), w, Math.ceil(data[0] * popRatio), Susceptible.color);
+		rect(x, Math.floor(450 - data[1] * popRatio), w, Math.ceil(data[1] * popRatio), Infectious.color);
+	});
+	strokeRect(507, 0, 493, 450, 2);
+
+	text(`R: ${r}`, 515, 487, 25);
 	currentTime++;
 };
 
 // Start the engine
 const engine = new Engine(update, 1000 / s.fps);
 engine.start();
-
-// ! This is just experimental, to be removed
-window.addEventListener("keydown", () => {
-	engine.stop();
-	console.log("Engine stopped");
-});

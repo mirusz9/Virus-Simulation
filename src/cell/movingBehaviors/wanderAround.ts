@@ -9,6 +9,7 @@ export default class WanderAround {
 	}
 
 	update() {
+		// Random walk
 		const x = Math.random() * s.maxVel * 2 - s.maxVel;
 		const y = Math.random() * s.maxVel * 2 - s.maxVel;
 		this.p.aX += this.lerp(0, x, 0.1);

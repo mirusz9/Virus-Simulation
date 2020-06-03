@@ -2,6 +2,7 @@
 const express = require("express");
 const app = express();
 const port = process.env.PORT || 3000;
+// Getting the parent directory
 const splitRootDir = __dirname.split("\\");
 splitRootDir.pop();
 const rootDir = splitRootDir.join("\\");

@@ -19,6 +19,7 @@ enum _states {
 }
 
 export default class Cell {
+	// Properties
 	public state: Susceptible | Infectious | Removed;
 	public mBehav: WanderAround | SocialDistance;
 	private color: string;
@@ -57,31 +58,18 @@ export default class Cell {
 				break;
 		}
 
+		// The draw circle function
 		this.circle = circle;
 		this.randomPos();
 	}
 
+	// Random position on the map
 	randomPos() {
 		this.x = Math.random() * 486 + 7;
 		this.y = Math.random() * 486 + 7;
 	}
 
-	getClosest() {
-		let closestDist = Infinity;
-		let closestI = 0;
-		Cell.cells.forEach((cell, index) => {
-			if (cell !== this) {
-				const dist = Math.abs(this.x - cell.x) ** 2 + Math.abs(this.y - cell.y) ** 2;
-				if (dist < closestDist) {
-					closestDist = dist;
-					closestI = index;
-				}
-			}
-		});
-		const returned: [Cell, number] = [Cell.cells[closestI], closestDist];
-		return returned;
-	}
-
+	// Position getters and setters
 	get left() {
 		return this.x - this.r;
 	}
@@ -113,14 +101,18 @@ export default class Cell {
 		this.y = y - this.r;
 	}
 
+	// Updating the position of the cell
 	updatePos() {
 		this.mBehav.update();
+
+		// Limiting acceleration
 		if (Math.abs(this.aX) > s.maxVel) {
 			this.aX = s.maxVel * Math.sign(this.aX);
 		}
 		if (Math.abs(this.aY) > s.maxVel) {
 			this.aY = s.maxVel * Math.sign(this.aY);
 		}
+		
 		this.vX += this.aX;
 		this.vY += this.aY;
 

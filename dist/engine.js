@@ -1,3 +1,4 @@
+// Pothonprogramming's fixed timestep engine
 export default class Engine {
     constructor(update, frameRate) {
         this.accumulatedTime = 0;
