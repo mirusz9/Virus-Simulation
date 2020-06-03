@@ -1,4 +1,4 @@
 export default {
-    popSize: 20,
+    popSize: 200,
     maxVel: 1
 };

@@ -37,21 +37,20 @@ const circle = (x: number, y: number, r: number, color = "#fff") => {
 };
 
 // * Setting up the simulation
-const cells: Cell[] = [];
 for (let i = 0; i < s.popSize; i++) {
-	const mBehav = Cell.mBehavs.WanderAround;
-	cells.push(new Cell(1, mBehav, circle));
+	const mBehav = Cell.mBehavs.SocialDistance;
+	Cell.cells.push(new Cell(1, mBehav, circle));
 }
 const update = () => {
 	rect(0, 0, 500, 500, "#000");
 	strokeRect(0, 0, 500, 500, 2);
 	// Updating every cell
-	cells.forEach((cell) => {
+	Cell.cells.forEach((cell) => {
 		cell.update();
 	});
 };
 
-const engine = new Engine(update, 1000 / 60);
+const engine = new Engine(update, 1000 / 30);
 engine.start();
 
 // ! This is just experimental, to be removed

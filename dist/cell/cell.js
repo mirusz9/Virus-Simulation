@@ -1,8 +1,10 @@
 import WanderAround from "./movingBehaviors/wanderAround.js";
+import SocialDistance from "./movingBehaviors/socialDistance.js";
 import s from "../settings.js";
 var _mBehavs;
 (function (_mBehavs) {
     _mBehavs[_mBehavs["WanderAround"] = 0] = "WanderAround";
+    _mBehavs[_mBehavs["SocialDistance"] = 1] = "SocialDistance";
 })(_mBehavs || (_mBehavs = {}));
 let Cell = /** @class */ (() => {
     class Cell {
@@ -17,6 +19,9 @@ let Cell = /** @class */ (() => {
                 case 0:
                     this.mBehav = new WanderAround(this);
                     break;
+                case 1:
+                    this.mBehav = new SocialDistance(this);
+                    break;
             }
             this.circle = circle;
             this.randomPos();
@@ -25,6 +30,21 @@ let Cell = /** @class */ (() => {
         randomPos() {
             this.x = Math.random() * 486 + 7;
             this.y = Math.random() * 486 + 7;
+        }
+        getClosest() {
+            let closestDist = Infinity;
+            let closestI = 0;
+            Cell.cells.forEach((cell, index) => {
+                if (cell !== this) {
+                    const dist = Math.abs(this.x - cell.x) ** 2 + Math.abs(this.y - cell.y) ** 2;
+                    if (dist < closestDist) {
+                        closestDist = dist;
+                        closestI = index;
+                    }
+                }
+            });
+            const returned = [Cell.cells[closestI], closestDist];
+            return returned;
         }
         get left() {
             return this.x - this.r;
@@ -52,6 +72,12 @@ let Cell = /** @class */ (() => {
         }
         updatePos() {
             this.mBehav.update();
+            if (Math.abs(this.aX) > s.maxVel) {
+                this.aX = s.maxVel * Math.sign(this.aX);
+            }
+            if (Math.abs(this.aY) > s.maxVel) {
+                this.aY = s.maxVel * Math.sign(this.aY);
+            }
             this.vX += this.aX;
             this.vY += this.aY;
             // Limiting velocity
@@ -92,6 +118,7 @@ let Cell = /** @class */ (() => {
         }
     }
     Cell.mBehavs = _mBehavs;
+    Cell.cells = [];
     return Cell;
 })();
 export default Cell;

@@ -1,25 +1,28 @@
 import WanderAround from "./movingBehaviors/wanderAround.js";
+import SocialDistance from "./movingBehaviors/socialDistance.js";
 import s from "../settings.js";
 
 type circleF = (x: number, y: number, r: number, color: string | undefined) => void;
 
 enum _mBehavs {
 	WanderAround,
+	SocialDistance,
 }
 
 export default class Cell {
 	public state: any;
-	public mBehav: WanderAround;
+	public mBehav: WanderAround | SocialDistance;
 	private color: string;
 	private circle: circleF;
-	private x: number;
-	private y: number;
+	x: number;
+	y: number;
 	private r = 4;
 	private vX = 0;
 	private vY = 0;
 	aX = 0;
 	aY = 0;
 	static mBehavs = _mBehavs;
+	static cells: Cell[] = [];
 
 	constructor(state: any, mBehav: number, circle: circleF) {
 		this.state = state;
@@ -27,6 +30,9 @@ export default class Cell {
 		switch (mBehav) {
 			case 0:
 				this.mBehav = new WanderAround(this);
+				break;
+			case 1:
+				this.mBehav = new SocialDistance(this);
 				break;
 		}
 
@@ -38,6 +44,22 @@ export default class Cell {
 	randomPos() {
 		this.x = Math.random() * 486 + 7;
 		this.y = Math.random() * 486 + 7;
+	}
+
+	getClosest() {
+		let closestDist = Infinity;
+		let closestI = 0;
+		Cell.cells.forEach((cell, index) => {
+			if (cell !== this) {
+				const dist = Math.abs(this.x - cell.x) ** 2 + Math.abs(this.y - cell.y) ** 2;
+				if (dist < closestDist) {
+					closestDist = dist;
+					closestI = index;
+				}
+			}
+		});
+		const returned: [Cell, number] = [Cell.cells[closestI], closestDist];
+		return returned;
 	}
 
 	get left() {
@@ -73,6 +95,12 @@ export default class Cell {
 
 	updatePos() {
 		this.mBehav.update();
+		if (Math.abs(this.aX) > s.maxVel) {
+			this.aX = s.maxVel * Math.sign(this.aX);
+		}
+		if (Math.abs(this.aY) > s.maxVel) {
+			this.aY = s.maxVel * Math.sign(this.aY);
+		}
 		this.vX += this.aX;
 		this.vY += this.aY;
 

@@ -2,7 +2,7 @@ import Cell from "../cell.js";
 import s from "../../settings.js";
 
 export default class WanderAround {
-	private p: Cell;
+	p: Cell;
 	constructor(parent: Cell) {
 		this.p = parent;
 	}
