@@ -1,6 +1,5 @@
 export default class Removed {
-    constructor(parent) {
+    constructor() {
         this.color = "#444345";
-        this.p = parent;
     }
 }

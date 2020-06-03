@@ -58,16 +58,19 @@ for (let i = 0; i < s.popSize; i++) {
 
 	Cell.cells.push(new Cell(state, mBehav, circle));
 }
+
+let currentTime = 0;
 const update = () => {
 	rect(0, 0, 500, 500, "#000");
 	strokeRect(0, 0, 500, 500, 2);
 	// Updating every cell
 	Cell.cells.forEach((cell) => {
-		cell.update();
+		cell.update(currentTime);
 	});
+	currentTime++;
 };
 
-const engine = new Engine(update, 1000 / 30);
+const engine = new Engine(update, 1000 / s.fps);
 engine.start();
 
 // ! This is just experimental, to be removed

@@ -19,6 +19,7 @@ let Cell = /** @class */ (() => {
     class Cell {
         constructor(state, mBehav, circle) {
             this.shouldBeInfectious = false;
+            this.shouldBeRemoved = false;
             this.r = 4;
             this.vX = 0;
             this.vY = 0;
@@ -26,13 +27,13 @@ let Cell = /** @class */ (() => {
             this.aY = 0;
             switch (state) {
                 case 0:
-                    this.state = new Susceptible(this);
+                    this.state = new Susceptible();
                     break;
                 case 1:
-                    this.state = new Infectious(this);
+                    this.state = new Infectious(this, 0);
                     break;
                 case 2:
-                    this.state = new Removed(this);
+                    this.state = new Removed();
             }
             switch (mBehav) {
                 case 0:
@@ -130,13 +131,18 @@ let Cell = /** @class */ (() => {
         draw() {
             this.circle(this.x, this.y, this.r, this.state.color);
         }
-        update() {
+        update(currentTime) {
             if (this.shouldBeInfectious) {
-                this.state = new Infectious(this);
+                this.state = new Infectious(this, currentTime);
+                this.shouldBeInfectious = false;
+            }
+            else if (this.shouldBeRemoved) {
+                this.state = new Removed();
+                this.shouldBeRemoved = false;
             }
             this.updatePos();
             if (this.state instanceof Infectious) {
-                this.state.update();
+                this.state.update(currentTime);
             }
             this.draw();
         }
