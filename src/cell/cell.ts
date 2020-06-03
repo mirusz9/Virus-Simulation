@@ -1,5 +1,8 @@
 import WanderAround from "./movingBehaviors/wanderAround.js";
 import SocialDistance from "./movingBehaviors/socialDistance.js";
+import Susceptible from "./states/susceptible.js";
+import Infectious from "./states/infectious.js";
+import Removed from "./states/removed.js";
 import s from "../settings.js";
 
 type circleF = (x: number, y: number, r: number, color: string | undefined) => void;
@@ -10,11 +13,13 @@ enum _mBehavs {
 }
 
 enum _states {
-
+	Susceptible,
+	Infectious,
+	Removed
 }
 
 export default class Cell {
-	public state: any;
+	public state: Susceptible | Infectious | Removed;
 	public mBehav: WanderAround | SocialDistance;
 	private color: string;
 	private circle: circleF;
@@ -30,7 +35,16 @@ export default class Cell {
 	static cells: Cell[] = [];
 
 	constructor(state: number, mBehav: number, circle: circleF) {
-		this.state = state;
+		switch (state) {
+			case 0: 
+				this.state = new Susceptible(this);
+				break;
+			case 1:
+				this.state = new Infectious(this);
+				break;
+			case 2:
+				this.state = new Removed(this);
+		}
 
 		switch (mBehav) {
 			case 0:
@@ -140,7 +154,7 @@ export default class Cell {
 	}
 
 	draw() {
-		this.circle(this.x, this.y, this.r, this.mBehav.color);
+		this.circle(this.x, this.y, this.r, this.state.color);
 	}
 
 	update() {

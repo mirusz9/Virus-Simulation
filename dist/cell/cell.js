@@ -1,5 +1,8 @@
 import WanderAround from "./movingBehaviors/wanderAround.js";
 import SocialDistance from "./movingBehaviors/socialDistance.js";
+import Susceptible from "./states/susceptible.js";
+import Infectious from "./states/infectious.js";
+import Removed from "./states/removed.js";
 import s from "../settings.js";
 var _mBehavs;
 (function (_mBehavs) {
@@ -8,6 +11,9 @@ var _mBehavs;
 })(_mBehavs || (_mBehavs = {}));
 var _states;
 (function (_states) {
+    _states[_states["Susceptible"] = 0] = "Susceptible";
+    _states[_states["Infectious"] = 1] = "Infectious";
+    _states[_states["Removed"] = 2] = "Removed";
 })(_states || (_states = {}));
 let Cell = /** @class */ (() => {
     class Cell {
@@ -17,7 +23,16 @@ let Cell = /** @class */ (() => {
             this.vY = 0;
             this.aX = 0;
             this.aY = 0;
-            this.state = state;
+            switch (state) {
+                case 0:
+                    this.state = new Susceptible(this);
+                    break;
+                case 1:
+                    this.state = new Infectious(this);
+                    break;
+                case 2:
+                    this.state = new Removed(this);
+            }
             switch (mBehav) {
                 case 0:
                     this.mBehav = new WanderAround(this);
@@ -112,7 +127,7 @@ let Cell = /** @class */ (() => {
             }
         }
         draw() {
-            this.circle(this.x, this.y, this.r, this.mBehav.color);
+            this.circle(this.x, this.y, this.r, this.state.color);
         }
         update() {
             this.updatePos();
