@@ -9,6 +9,10 @@ enum _mBehavs {
 	SocialDistance,
 }
 
+enum _states {
+
+}
+
 export default class Cell {
 	public state: any;
 	public mBehav: WanderAround | SocialDistance;
@@ -22,9 +26,10 @@ export default class Cell {
 	aX = 0;
 	aY = 0;
 	static mBehavs = _mBehavs;
+	static states = _states;
 	static cells: Cell[] = [];
 
-	constructor(state: any, mBehav: number, circle: circleF) {
+	constructor(state: number, mBehav: number, circle: circleF) {
 		this.state = state;
 
 		switch (mBehav) {
@@ -38,7 +43,6 @@ export default class Cell {
 
 		this.circle = circle;
 		this.randomPos();
-		this.color = "#ff0";
 	}
 
 	randomPos() {
@@ -136,7 +140,7 @@ export default class Cell {
 	}
 
 	draw() {
-		this.circle(this.x, this.y, this.r, this.color);
+		this.circle(this.x, this.y, this.r, this.mBehav.color);
 	}
 
 	update() {

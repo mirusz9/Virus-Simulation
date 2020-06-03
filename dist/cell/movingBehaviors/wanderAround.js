@@ -1,6 +1,7 @@
 import s from "../../settings.js";
 export default class WanderAround {
     constructor(parent) {
+        this.color = "#ff0000";
         this.p = parent;
     }
     update() {

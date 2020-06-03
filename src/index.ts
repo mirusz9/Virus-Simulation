@@ -37,8 +37,18 @@ const circle = (x: number, y: number, r: number, color = "#fff") => {
 };
 
 // * Setting up the simulation
+let socialDistancing = 0;
 for (let i = 0; i < s.popSize; i++) {
-	const mBehav = Cell.mBehavs.SocialDistance;
+	// Setting movingBehavior
+	let mBehav = Cell.mBehavs.WanderAround;
+	const prob = (s.socialDistancing - socialDistancing) / (s.popSize - i);
+	if (prob > Math.random()) {
+		mBehav = Cell.mBehavs.SocialDistance;
+		socialDistancing++;
+	}
+
+	// Setting infectious
+
 	Cell.cells.push(new Cell(1, mBehav, circle));
 }
 const update = () => {

@@ -2,6 +2,7 @@ import WanderAround from "./wanderAround.js";
 export default class SocialDistance extends WanderAround {
     constructor(parent) {
         super(parent);
+        this.color = "#00ff00";
     }
     update() {
         super.update();

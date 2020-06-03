@@ -6,6 +6,9 @@ var _mBehavs;
     _mBehavs[_mBehavs["WanderAround"] = 0] = "WanderAround";
     _mBehavs[_mBehavs["SocialDistance"] = 1] = "SocialDistance";
 })(_mBehavs || (_mBehavs = {}));
+var _states;
+(function (_states) {
+})(_states || (_states = {}));
 let Cell = /** @class */ (() => {
     class Cell {
         constructor(state, mBehav, circle) {
@@ -25,7 +28,6 @@ let Cell = /** @class */ (() => {
             }
             this.circle = circle;
             this.randomPos();
-            this.color = "#ff0";
         }
         randomPos() {
             this.x = Math.random() * 486 + 7;
@@ -110,7 +112,7 @@ let Cell = /** @class */ (() => {
             }
         }
         draw() {
-            this.circle(this.x, this.y, this.r, this.color);
+            this.circle(this.x, this.y, this.r, this.mBehav.color);
         }
         update() {
             this.updatePos();
@@ -118,6 +120,7 @@ let Cell = /** @class */ (() => {
         }
     }
     Cell.mBehavs = _mBehavs;
+    Cell.states = _states;
     Cell.cells = [];
     return Cell;
 })();

@@ -3,6 +3,7 @@ import s from "../../settings.js";
 
 export default class WanderAround {
 	p: Cell;
+	color = "#ff0000";
 	constructor(parent: Cell) {
 		this.p = parent;
 	}
