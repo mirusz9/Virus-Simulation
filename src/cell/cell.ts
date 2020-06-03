@@ -15,7 +15,7 @@ enum _mBehavs {
 enum _states {
 	Susceptible,
 	Infectious,
-	Removed
+	Removed,
 }
 
 export default class Cell {
@@ -23,6 +23,7 @@ export default class Cell {
 	public mBehav: WanderAround | SocialDistance;
 	private color: string;
 	private circle: circleF;
+	shouldBeInfectious = false;
 	x: number;
 	y: number;
 	private r = 4;
@@ -36,7 +37,7 @@ export default class Cell {
 
 	constructor(state: number, mBehav: number, circle: circleF) {
 		switch (state) {
-			case 0: 
+			case 0:
 				this.state = new Susceptible(this);
 				break;
 			case 1:
@@ -158,7 +159,15 @@ export default class Cell {
 	}
 
 	update() {
+		if (this.shouldBeInfectious) {
+			this.state = new Infectious(this);
+		}
 		this.updatePos();
+
+		if (this.state instanceof Infectious) {
+			this.state.update();
+		}
+
 		this.draw();
 	}
 }

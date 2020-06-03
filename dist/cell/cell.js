@@ -18,6 +18,7 @@ var _states;
 let Cell = /** @class */ (() => {
     class Cell {
         constructor(state, mBehav, circle) {
+            this.shouldBeInfectious = false;
             this.r = 4;
             this.vX = 0;
             this.vY = 0;
@@ -130,7 +131,13 @@ let Cell = /** @class */ (() => {
             this.circle(this.x, this.y, this.r, this.state.color);
         }
         update() {
+            if (this.shouldBeInfectious) {
+                this.state = new Infectious(this);
+            }
             this.updatePos();
+            if (this.state instanceof Infectious) {
+                this.state.update();
+            }
             this.draw();
         }
     }
