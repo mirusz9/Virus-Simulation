@@ -1,24 +1,36 @@
+import WanderAround from "./movingBehaviors/wanderAround.js";
+import s from "../settings.js";
+
 type circleF = (x: number, y: number, r: number, color: string | undefined) => void;
+
+enum _mBehavs {
+	WanderAround,
+}
 
 export default class Cell {
 	public state: any;
-	public mBehav: any;
+	public mBehav: WanderAround;
 	private color: string;
 	private circle: circleF;
 	private x: number;
 	private y: number;
 	private r = 4;
-	private vX: number;
-	private vY: number;
-	private aX = 0;
-	private aY = 0;
+	private vX = 0;
+	private vY = 0;
+	aX = 0;
+	aY = 0;
+	static mBehavs = _mBehavs;
 
-	constructor(state: any, mBehav: any, circle: circleF) {
+	constructor(state: any, mBehav: number, circle: circleF) {
 		this.state = state;
-		this.mBehav = mBehav;
+
+		switch (mBehav) {
+			case 0:
+				this.mBehav = new WanderAround(this);
+				break;
+		}
+
 		this.circle = circle;
-		this.vX = 1;
-		this.vY = 2;
 		this.randomPos();
 		this.color = "#ff0";
 	}
@@ -44,24 +56,34 @@ export default class Cell {
 		return this.y + this.r;
 	}
 
-	set left(x:number) {
+	set left(x: number) {
 		this.x = x + this.r;
 	}
-	set top(y:number) {
+	set top(y: number) {
 		this.y = y + this.r;
 	}
 
-	set right(x:number) {
+	set right(x: number) {
 		this.x = x - this.r;
 	}
 
-	set bottom(y:number) {
+	set bottom(y: number) {
 		this.y = y - this.r;
 	}
 
 	updatePos() {
+		this.mBehav.update();
 		this.vX += this.aX;
 		this.vY += this.aY;
+
+		// Limiting velocity
+		if (Math.abs(this.vX) > s.maxVel) {
+			this.vX = s.maxVel * Math.sign(this.vX);
+		}
+		if (Math.abs(this.vY) > s.maxVel) {
+			this.vY = s.maxVel * Math.sign(this.vY);
+		}
+
 		this.aX = 0;
 		this.aY = 0;
 		this.x += this.vX;
@@ -83,7 +105,6 @@ export default class Cell {
 			this.bottom = 500;
 			this.vY = 0;
 		}
-
 	}
 
 	draw() {

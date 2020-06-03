@@ -39,7 +39,8 @@ const circle = (x: number, y: number, r: number, color = "#fff") => {
 // * Setting up the simulation
 const cells: Cell[] = [];
 for (let i = 0; i < s.popSize; i++) {
-	cells.push(new Cell(1, 1, circle));
+	const mBehav = Cell.mBehavs.WanderAround;
+	cells.push(new Cell(1, mBehav, circle));
 }
 const update = () => {
 	rect(0, 0, 500, 500, "#000");
