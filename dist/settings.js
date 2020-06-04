@@ -4,9 +4,9 @@ export default {
     socialDistancing: 0,
     maxVel: 1,
     infectious: {
-        range: 30,
+        range: 20,
         count: 1,
-        probab: 0.5,
-        duration: 2,
+        probab: 0.05,
+        duration: 5,
     },
 };
