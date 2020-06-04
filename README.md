@@ -74,14 +74,14 @@ socialDistancing|0|Sets how many cells out of the population size are trying to 
 maxVel|1|Limits the velocity of the cells. Given in pixels.
 range|20|The radius an infected cell can sense others. If another cell is in the radius, there is some probability that the cell becomes infected.
 count|1|Sets the number of infected cells at the start of the simulation
-probab|0.05|The probability a cell gets infected if it is in the `radius` of an infected cell. This must be a number between 0 and 1.
+probab|0.05|The probability a cell gets infected if it is in the `range` of an infected cell. This must be a number between 0 and 1.
 duration|5|The duration a cell is infected before becoming removed. This number is **not** counted in frames but seconds. At 30 frames a second this means 150 frames.
 
 After editing the settings, make sure to **save** the file and compile it into JavaScript. This can be done with `npm run ts-compile`.
 
 ### Running simulation
 Before running the simulation, you need to start the server with `npm start`.
-```cmd
+```bash
 npm start
 ```
 After starting the server, open your browser and go to `http://localhost:3000/`. The simulation starts immediately. If you want to run the simulation again, just reload the page. After you change any of the settings or files, restart the server with running `npm start` again.
