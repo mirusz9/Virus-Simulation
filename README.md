@@ -1,6 +1,7 @@
 # Virus simulation
 
 This project is about a virus simulator with great visualization. You can also highly customize the settings of the simulation. Note that the idea came from [3Blue1Brown's video](https://www.youtube.com/watch?v=gxAaO2rsdIs) on Youtube.
+<br/>
 ![After running the simulation](img.png)
 
 ## Installation
@@ -65,16 +66,16 @@ export default {
 };
 ```
 
-|Setting|Default value|Description|
-|-|-|-|
-|fps|30|Sets the refresh rate of the simulation. Note that the simulation is **optimized for 30fps**.
-|popSize|500|Sets how many cells are in the simulation. If you have a slower computer, a smaller population size is recommended.|
-|socialDistancing|0|Sets how many cells out of the population size are trying to get as far as they can from others. This number cannot be bigger than the `popSize`.|
-|maxVel|1|Limits the velocity of the cells. Given in pixels.|
-|range|20|The radius an infected cell can sense others. If another cell is in the radius, there is some probability that the cell becomes infected.|
-|count|1|Sets the number of infected cells at the start of the simulation|
-|probab|0.05|The probability a cell gets infected if it is in the `radius` of an infected cell. This must be a number between 0 and 1.|
-|duration|5|The duration a cell is infected before becoming removed. This number is **not** counted in frames but seconds. At 30 frames a second this means 150 frames.|
+Setting|Default value|Description
+-|-|-
+fps|30|Sets the refresh rate of the simulation. Note that the simulation is **optimized for 30fps**.
+popSize|500|Sets how many cells are in the simulation. If you have a slower computer, a smaller population size is recommended.
+socialDistancing|0|Sets how many cells out of the population size are trying to get as far as they can from others. This number cannot be bigger than the `popSize`.
+maxVel|1|Limits the velocity of the cells. Given in pixels.
+range|20|The radius an infected cell can sense others. If another cell is in the radius, there is some probability that the cell becomes infected.
+count|1|Sets the number of infected cells at the start of the simulation
+probab|0.05|The probability a cell gets infected if it is in the `radius` of an infected cell. This must be a number between 0 and 1.
+duration|5|The duration a cell is infected before becoming removed. This number is **not** counted in frames but seconds. At 30 frames a second this means 150 frames.
 After editing the settings, make sure to **save** the file and compile it into JavaScript. This can be done with `npm run ts-compile`.
 
 ### Running simulation
