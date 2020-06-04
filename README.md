@@ -8,11 +8,11 @@ This project is about a virus simulator with great visualization. You can also h
 
 First, **clone** the repository to your device.
 
-```bash
+```console
 git clone https://github.com/mirusz9/Virus-Simulation.git
 ```
 After cloning the repository, install the dependencies with the **Node Package Manager**, which comes with [node.js](https://nodejs.org/en/). Be aware that `npm install` installs the Dev-dependencies as well. If you don't need them, use `npm install --only=prod` instead.
-```bash
+```console
 # Installs dev-dependencies as well
 npm install
 
@@ -37,7 +37,7 @@ These are for better code editing and faster testing
 ## Usage
 ### Npm scripts
 The most important commands are preset by mirusz9. `npm start` just starts a webserver on port 3000. `npm run start-with-nodemon` does the same, but nodemon restarts the server every time a .js file is changed. Note that dev-dependencies are **required** to use this command. If you have changed some typescript files, you **must** first compile all the .ts files to .js. This can be done with `npm run ts-compile`.
-```bash
+```console
 # Starts the webserver
 npm start
 
