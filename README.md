@@ -1,7 +1,7 @@
 # Virus simulation
 
 This project is about a virus simulator with great visualization. You can also highly customize the settings of the simulation. Note that the idea came from [3Blue1Brown's video](https://www.youtube.com/watch?v=gxAaO2rsdIs) on Youtube.
-<br/>
+<br/><br/>
 ![After running the simulation](img.png)
 
 ## Installation
@@ -76,6 +76,7 @@ range|20|The radius an infected cell can sense others. If another cell is in the
 count|1|Sets the number of infected cells at the start of the simulation
 probab|0.05|The probability a cell gets infected if it is in the `radius` of an infected cell. This must be a number between 0 and 1.
 duration|5|The duration a cell is infected before becoming removed. This number is **not** counted in frames but seconds. At 30 frames a second this means 150 frames.
+
 After editing the settings, make sure to **save** the file and compile it into JavaScript. This can be done with `npm run ts-compile`.
 
 ### Running simulation
