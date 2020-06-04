@@ -8,11 +8,11 @@ This project is about a virus simulator with great visualization. You can also h
 
 First, **clone** the repository to your device.
 
-```console
+```cmd
 git clone https://github.com/mirusz9/Virus-Simulation.git
 ```
 After cloning the repository, install the dependencies with the **Node Package Manager**, which comes with [node.js](https://nodejs.org/en/). Be aware that `npm install` installs the Dev-dependencies as well. If you don't need them, use `npm install --only=prod` instead.
-```console
+```cmd
 # Installs dev-dependencies as well
 npm install
 
