@@ -87,4 +87,4 @@ npm start
 After starting the server, open your browser and go to `http://localhost:3000/`. The simulation starts immediately. If you want to run the simulation again, just reload the page. After you change any of the settings or files, restart the server with running `npm start` again.
 
 ---
-## mirusz9 2020
+## mirusz9, 2020
