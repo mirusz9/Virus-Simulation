@@ -1,10 +1,6 @@
-let Susceptible = /** @class */ (() => {
-    class Susceptible {
-        constructor() {
-            this.color = "#7ebeb8";
-        }
+export default class Susceptible {
+    constructor() {
+        this.color = "#7ebeb8";
     }
-    Susceptible.color = "#7ebeb8";
-    return Susceptible;
-})();
-export default Susceptible;
+}
+Susceptible.color = "#7ebeb8";

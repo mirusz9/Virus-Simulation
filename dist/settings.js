@@ -1,6 +1,6 @@
 export default {
-    fps: 30,
-    popSize: 500,
+    fps: 200,
+    popSize: 200,
     socialDistancing: 0,
     maxVel: 1,
     infectious: {
