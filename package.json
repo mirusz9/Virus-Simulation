@@ -20,7 +20,7 @@
 	"homepage": "https://github.com/mirusz9/Virus-Simulation#readme",
 	"devDependencies": {
 		"@types/node": "^14.0.9",
-		"nodemon": "^2.0.4"
+		"nodemon": "^2.0.20"
 	},
 	"dependencies": {
 		"ejs": "^3.1.3",
